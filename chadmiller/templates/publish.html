@@ -1,0 +1,18 @@
+{{> header}}
+
+<h1>Live Blogger</h1>
+<h2>Publish</h2>
+<form>
+  <textarea placeholder="Enter a message..."></textarea>
+</form>
+<h3>Updates</h3>
+<ul>
+  {{#each updates}}
+    <li>
+      <b>{{author}}</b> - {{format-date timestamp}}
+      <p>{{msg}}</p>
+    </li>
+  {{/each}}
+</ul>
+
+{{> footer}}
