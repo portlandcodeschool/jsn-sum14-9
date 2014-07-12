@@ -30,44 +30,48 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 var dbFunctions = {};
 
-dbFunctions.addFakeTodo = function () {
-  db.put('my-todos', 'todo1', {
-    "todo": "mow the lawn"
-  })
+dbFunctions.addFakeingredient = function () {
+  db.put('my-kitchen', 'ingredients', {ingredient: [{"eggs": "12"}, {"flour": "1 lb"}, {"milk": "1 Quart"}, {"sugar": "1 lb"}, {"baking soda":"1 box"}, {"baking power":"1 can"}]}
+  )
   .fail(function (err) {
     console.error(err);
-    console.error('could not add the todo. sorry :-(');
+    console.error('could not add the ingredient. sorry :-(');
   });
 }
 
-dbFunctions.addTodo = function (id, description) {
-  db.put('my-todos', ('todo' + id), {
-    "todo": description
+dbFunctions.addIngredient = function (id, description) {
+  db.put('ingredients', ('ingredient' + id), {
+    "ingredient": description
   })
   .fail(function (err) {
     console.error(err);
-    console.error('could not add the todo. sorry :-(');
+    console.error('could not add the ingredient. sorry :-(');
   });
 }
 
-// dbFunctions.addFakeTodo();
+ dbFunctions.addFakeingredient();
 
 // express routes
 
 var items = [];
 
-app.get('/', function (req, res) {
+app.get('/ingredients', function (req, res) {
   items = [];
-  db.list('my-todos', {limit:100, startKey:'todo0'})
+  db.list('my-kitchen', {limit:100, startKey:'ingredients'})
   .then(function (result) {
-    console.log(result.body.results);
+    //console.log(result.body.results);
     result.body.results.forEach(function (item, index) {
-      var resultItem = item.value.todo;
-      items.unshift(resultItem);
-    }); 
+      var resultItems = item.value;
+      console.log(resultItems);  
+      resultItems.forEach(function (item, index){
+        var resultItem = item;
+        
+        items.unshift(resultItem);
+      });  
+    });
   })
   .then(function(result) {
-    res.render('todos', {items:items});
+    res.render('ingredients', {items:items});
   })
   .fail(function (err) {
     console.error(err);
@@ -75,14 +79,14 @@ app.get('/', function (req, res) {
 });
 
 
-// json from client: {"todo": "mow the lawn"}
-app.post('/addtodo', function (req, res){
+// json from client: {"eggs": "1 dozen}
+app.post('/addingredient', function (req, res){
   req.accepts('application/json');
   var id = items.length;
   console.log(req.body);
-  console.log('just added the todo: ' + req.body.todo);
-  dbFunctions.addTodo(id, req.body.todo)
-  res.send(200, 'ok, we added your todo');
+  console.log('just added the ingredient: ' + req.body.ingredient);
+  dbFunctions.addIngredient(id, req.body.ingredient)
+  res.send(200, 'ok, we added your ingredient');
 });
 
 // express middleware for error handling
