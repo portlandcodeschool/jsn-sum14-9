@@ -1,4 +1,6 @@
 *.swp
 *.swo
 *.txt
+*.yaml
 node_modules
+config.js

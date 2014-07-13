@@ -1,0 +1,70 @@
+div.calendar {
+  margin: 50px 100px;
+  width: 875px;
+}
+h1.month {
+  font-family: sans-serif;
+  text-align: center;
+}
+nav.nextlast {
+  position: absolute;
+  width: 875px;
+  left: 110px;
+}
+nav.nextlast ol {
+  width: 875px;
+}
+nav.nextlast ol li {
+  list-style-type: none;
+  display: inline;
+  font-family: sans-serif;
+}
+#lastlink {
+  left: 15px;
+  position: absolute;
+}
+#nextlink {
+  right: 15px;
+  position: absolute;
+}
+table.calendar {
+  empty-cells: show;
+  font-family: sans-serif;
+  border-collapse: collapse;
+}
+tr, thead {
+  border-collapse: collapse;
+  font-family: sans-serif;
+}
+thead {
+  padding: 5px;
+}
+td {
+  position: relative;
+  width: 125px;
+  height: 125px;
+  border: 1px solid black;
+  border-collapse: collapse;
+  margin: 0px;
+  max-width: 125px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.8em;
+}
+td.lastmonth, td.nextmonth {
+  background-color: hsla(233, 100%, 0%, 0.2);
+}
+span.date {
+  font-weight: bold;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+div.events ul {
+  font-size: 0.8em;
+  padding: 0px;
+  margin: 0px;
+  list-style-type: none;
+  position: relative;
+}
