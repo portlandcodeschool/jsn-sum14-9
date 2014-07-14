@@ -14,6 +14,7 @@ var monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July'
 var dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
   function makeTable(date) {
+    var div;
     var table = document.createElement('table');
     table.classList.add('month_view', 'calendar');
     var thead = document.createElement('thead');
@@ -31,7 +32,42 @@ var dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'
     };
     getStart();
 
+    var makeContainer = function() {
+      div = document.createElement('div');
+      div.classList.add('calendar');
+    }
+    makeContainer();
+
+    var makeNav = function() {
+      var nav = document.createElement('nav');
+      var ol = document.createElement('ol');
+      var lastlink = document.createElement('li');
+      var nextlink = document.createElement('li');
+      var backMonth = document.createTextNode('<<');
+      var fwdMonth = document.createTextNode('>>');
+      nav.classList.add('nextlast');
+      lastlink.id = 'lastlink';
+      nextlink.id = 'nextlink';
+      lastlink.appendChild(backMonth);
+      nextlink.appendChild(fwdMonth);
+      ol.appendChild(lastlink);
+      ol.appendChild(nextlink);
+      nav.appendChild(ol);
+      div.appendChild(nav);
+    }
+    makeNav();
+
     var makeHeader = function() {
+      h1 = document.createElement('h1');
+      h1.classList.add('month');
+      console.log('month: ' + monthNames[date.getMonth()] + ' year: ' + date.getFullYear());
+      headerText = document.createTextNode(monthNames[date.getMonth()] + ' ' + date.getFullYear());
+      h1.appendChild(headerText);
+      div.appendChild(h1);
+    }
+    makeHeader();
+
+    var makeThead = function() {
       for (i=0; i<7; i++) {
         var th = document.createElement('th');
         var day = document.createTextNode(dayNames[i]);
@@ -40,7 +76,7 @@ var dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'
       }
       table.appendChild(thead);
     };
-    makeHeader();
+    makeThead();
 
     var rowCount = function(year, month) {
       return Math.ceil((monthLength(year, month) + firstDay(year, month))/7);
@@ -73,7 +109,8 @@ var dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'
         cellDateCounter++;
       }
     }
-    return table;
+    div.appendChild(table);
+    return div;
 
   }
 
