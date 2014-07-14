@@ -94,6 +94,7 @@ var dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'
         var dateModifier = monthStart.getDate() + cellDateCounter;
         var workingDate = new Date(monthStart);
         workingDate.setDate(dateModifier);
+        cell.id = 'y' + workingDate.getFullYear() + 'm' + (workingDate.getMonth() + 1) + 'd' + workingDate.getDate();
         if ((workingDate.getMonth() < date.getMonth()) || (workingDate.getFullYear() < date.getFullYear())) {
           cell.classList.add('lastmonth');
         } else if ((workingDate.getMonth() > date.getMonth()) || (workingDate.getFullYear() > date.getFullYear())) {
