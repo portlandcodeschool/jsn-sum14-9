@@ -17,12 +17,12 @@ var dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'
     var table = document.createElement('table');
     table.classList.add('month_view', 'calendar');
     var thead = document.createElement('thead');
-    var currentYear = date.getYear();
+    var currentYear = date.getFullYear();
     var currentMonth = date.getMonth();
     var monthStart = new Date(currentYear, currentMonth, 1); // holds the date for the month creation loop
 
     var getStart = function() {
-      if (monthStart.day() !== 0) {
+      if (monthStart.getDay() !== 0) {
         monthStart.setDate(monthStart.getDate() - 1 );
         getStart();
       } else {
@@ -43,27 +43,30 @@ var dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'
     makeHeader();
 
     var rowCount = function(year, month) {
-      //console.log('checking ' + monthLength(year, month) + ' + ' + firstDay(year, month) );
       return Math.ceil((monthLength(year, month) + firstDay(year, month))/7);
     };
 
-    var height = rowCount(date.getYear(), date.getMonth());
+    var height = rowCount(date.getFullYear(), date.getMonth());
     var tr, td;
+    var cellDateCounter = 0;
 
     for (var rows = 0; rows < height; rows++) {
       var row = document.createElement('tr');
       table.appendChild(row);
-      var cellDateCounter = 0;
-      var workingDate = new Date(monthStart.getYear(), monthStart.getMonth(), monthStart.getDate());
       for (var cellCount = 0; cellCount < 7; cellCount++) {
         var cell = document.createElement('td');
-        workingDate.setDate(monthStart + cellDateCounter);
+        var dateModifier = monthStart.getDate() + cellDateCounter;
+        var workingDate = new Date(monthStart);
+        console.log(workingDate + '::' + dateModifier);
+        workingDate.setDate(dateModifier); // Problem here!
+        console.log('workingDate: ' + workingDate);
         var cellDate = workingDate.getDate();
         var dateSpan = document.createElement('span');
         var dateText = document.createTextNode(cellDate);
         dateSpan.appendChild(dateText);
         cell.appendChild(dateSpan);
         row.appendChild(cell);
+        cellDateCounter++;
       }
     }
     return table;
