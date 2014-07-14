@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="../../../javascripts/product.js"></script>
+
+</head>
+<body>
+<small>The magic word is {{this}}!</small>
+<h1>Add a product:</h1>
+<form method="POST" action="">
+    <label for="categoryName">Pick a category:</label>
+    <select id=categoryName name=categoryName>
+        {{#categories}}
+<option value="{{value.category}}">{{value.category}}</option>
+        {{/categories}}
+
+    </select>
+    <input id="productName" name="productName" type="text" value="Enter a product name">
+    <input type="submit" value="Create"></button>
+</form>
+</body>
+</html>
+
+</body>
+</html>
