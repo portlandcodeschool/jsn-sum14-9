@@ -57,15 +57,19 @@ var dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'
         var cell = document.createElement('td');
         var dateModifier = monthStart.getDate() + cellDateCounter;
         var workingDate = new Date(monthStart);
-        console.log(workingDate + '::' + dateModifier);
-        workingDate.setDate(dateModifier); // Problem here!
-        console.log('workingDate: ' + workingDate);
+        workingDate.setDate(dateModifier);
+        if ((workingDate.getMonth() < date.getMonth()) || (workingDate.getFullYear() < date.getFullYear())) {
+          cell.classList.add('lastmonth');
+        } else if ((workingDate.getMonth() > date.getMonth()) || (workingDate.getFullYear() > date.getFullYear())) {
+          cell.classList.add('nextmonth');
+        }
         var cellDate = workingDate.getDate();
         var dateSpan = document.createElement('span');
         var dateText = document.createTextNode(cellDate);
         dateSpan.appendChild(dateText);
         cell.appendChild(dateSpan);
         row.appendChild(cell);
+        dateSpan.classList.add('date');
         cellDateCounter++;
       }
     }
