@@ -1,0 +1,3 @@
+var configValues = {}
+configValues.orchestrateKey = "ORCHESTRATE_KEY";
+module.exports = configValues;
