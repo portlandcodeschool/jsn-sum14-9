@@ -1,0 +1,33 @@
+body {
+  padding-top: 50px;
+  font-family: "Titillium Web", sans-serif;
+}
+
+body .btn {
+  font-weight: bold;
+  border: 2px solid #ddd;
+}
+
+body .well {
+  padding: 10px;
+}
+
+.submit {
+  color: green;
+}
+
+.delete {
+  color: red;
+}
+
+.navbar {
+  background-color: #eeeeee;
+}
+
+.navbar-brand {
+  color: #777777;
+}
+
+input.msg-input {
+  margin: 10px 0;
+}

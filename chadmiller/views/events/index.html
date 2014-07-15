@@ -1,0 +1,16 @@
+{{> header}}
+
+{{> nav}}
+
+<div class="container">
+  <h1>All Events</h1>
+  <ul class="list-group">
+    {{#each events}}
+      <a href="/events/{{key}}" class="list-group-item">
+        <b>{{name}}</b>
+      </a>
+    {{/each}}
+  </ul>
+</div>
+
+{{> footer}}

@@ -1,0 +1,35 @@
+{{> header}}
+
+{{> nav}}
+
+<div class="container">
+  {{#with event}}
+    <h1>{{name}}</h1>
+    <a href="/events/{{key}}" class="btn btn-default">View Event</a>
+    <a href="/events/{{key}}/edit" class="btn btn-default">Edit Event</a>
+    <hr>
+    <h4>Post an update
+      <small class="pull-right">Supports
+        <a target="_blank" href="http://daringfireball.net/projects/markdown/">markdown</a>
+      </small>
+    </h4>
+    <form>
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Enter your name...">
+      </div>
+      <div class="form-group">
+        <textarea class="form-control" rows=5 placeholder="Enter a message..."></textarea>
+      </div>
+      <input type="submit" class="btn btn-default submit" value="Publish">
+    </form>
+    <hr>
+    <h4>Event Updates</h4>
+    {{#unless updates}}
+      <div id="no-updates-well" class="well">The are no updates for this event.</div>
+    {{/unless}}
+    <ul class="updates list-group"></ul>
+  {{/with}}
+</div>
+
+{{> footer}}
+<script src="/js/views/events/publish.js"></script>
