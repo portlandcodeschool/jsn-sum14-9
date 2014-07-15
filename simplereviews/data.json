@@ -1,0 +1,31 @@
+//categories
+//key label-plural.replace.(" ","-").toLowerCase()
+//
+{
+    "label-plural":"Atomizers",
+    "label-singular":"Atomizer",
+    "parent":"",
+    "child":""
+}
+
+
+//product key: label.replate(" ","-").toLowerCase()
+{
+    "label": "Opus D",
+    "insta": "opusd"
+}
+
+//review
+//needs unique primary key product_label.replace(" ","-").toLowerCase()
+{
+    "score": "0",
+    "label": "Hard To Clean",
+    "good": false
+}
+
+//videos
+/////graph to product
+{
+    "youtubeid": "text",
+    "good": true
+}

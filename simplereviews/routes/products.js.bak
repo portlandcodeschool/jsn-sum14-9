@@ -1,0 +1,21 @@
+var express = require('express');
+var router = express.Router();
+var config = require('../config.js');
+var db = require('orchestrate')(config.dbKey);
+
+router.get('/', function(req,res){
+    res.redirect('../');
+});
+
+router.get('/:product', function(req, res) {
+    db.get('products',req.params.product)
+        .then(function (result) {
+            res.render('products', {product: result.body});
+        })
+        .fail(function (err){
+            res.send(err.body.message);
+            console.log(err);
+        });
+});
+
+module.exports = router;

@@ -1,0 +1,12 @@
+extends index 
+
+block content
+  h1 #{category} > #{product.label}
+  h2 Good Reviews - #{goodReviewsCount}
+  ul
+  each review in goodReviews 
+      li #{review.message} - #{review.count}
+  h2 Bad Reviews - #{badReviewsCount}
+  ul
+  each review in badReviews
+    li #{review.message} - #{review.count}

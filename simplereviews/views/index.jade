@@ -1,0 +1,11 @@
+extends layout
+
+block content
+    center
+        h1 Non-boring reviews
+        h2 Read a few bullet points, watch some videos and make a decision.
+    h1 Categories 
+    ul
+        each category in categories 
+            li 
+                a(href='/category/' + category.path.key) #{category.value.labelPlural}
