@@ -1,2 +1,2 @@
 #!/bin/sh
-nodemon server.js
+DEBUG=* nodemon server.js

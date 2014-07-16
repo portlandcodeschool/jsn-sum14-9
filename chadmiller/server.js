@@ -4,6 +4,7 @@ dotenv.load();
 
 // dependencies
 var express = require('express');
+var debug = require('debug')('express');
 var path = require('path');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
