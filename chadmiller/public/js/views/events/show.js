@@ -5,7 +5,7 @@ $(function() {
 
   socket.on('updates', function(update) {
     // remove the no updates well if it exists
-    if ($('#no-updates-well')) $('#no-updates-well').remove();
+    if ($('#no-updates')) $('#no-updates').remove();
 
     var updateItem = new Update(update.author, update.msg, update.timestamp);
     var $update = $(updateItem.toHTML());
@@ -20,17 +20,5 @@ $(function() {
 
   socket.on('deleteUpdate', function(update) {
     $('#' + update.timestamp).remove();
-  });
-
-  $('#delete').click(function() {
-    $.ajax(window.location.pathname, {
-      method: 'DELETE'
-    })
-    .done(function() {
-      window.location.href = '/events';
-    })
-    .fail(function(err) {
-      console.log(err);
-    });
   });
 });

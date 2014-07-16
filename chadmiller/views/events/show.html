@@ -11,17 +11,13 @@
       </blockquote>
     {{/if}}
     <a href="/events/{{key}}/publish" class="btn btn-default">Publish updates</a>
-    <a href="/events/{{key}}/edit" class="btn btn-default">Edit Event</a>
     <br><br>
     <div class="well">{{status}}</div>
     <h4>Event Updates</h4>
     <ul class="updates list-group"></ul>
     {{#unless updates}}
-      <div class="well">The are no updates for this event.</div>
+      <div id="no-updates" class="well">The are no updates for this event.</div>
     {{/unless}}
-    <button id="delete" class="btn btn-default delete">Delete event</button>
-    <br>
-    <br>
   {{/with}}
 </div>
 
