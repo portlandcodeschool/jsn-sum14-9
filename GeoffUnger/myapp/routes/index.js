@@ -13,7 +13,7 @@ router.get('/', function(req, res) {
         .fail(function (err) {
             res.render('index.hjs', {request: req.param('categoryName'), result: "Failure!"});
         })
-  //res.render('index', { title: "RateJoes'.com" });
+
 });
 
 module.exports = router;

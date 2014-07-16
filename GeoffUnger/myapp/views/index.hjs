@@ -1,19 +1,21 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <title>{{ title }}</title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h2>{{ title }}</h2>
-    <p>Welcome to {{ title }}</p>
-    <div id="categoryNav">
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+
+    <script src="../../javascripts/jquery-1.11.1.min.js"></script>
+    <script src="../../javascripts/index.js"></script>
+</head>
+<body>
+
+<div id="categoryNav" class="categoryNav">
     <ul>
-    {{#categories}}
-    <li>{{value.category}}</li>
-    {{/categories}}
+        {{#categories}}
+            <li>{{value.category}}</li>
+        {{/categories}}
     </ul>
-    </div>
-    <div id="main"></div>
-  </body>
+</div>
+<div id="main"></div>
+</body>
 </html>

@@ -20,7 +20,7 @@ a {
     text-align: left;
     font-family: helvetica;
     font-size: 14px;
-    display: inline-block;
+    display: block;
     overflow: hidden;
     border: solid 5px black;
     border-radius: 5px;
@@ -42,4 +42,8 @@ a {
     display: inline;
 
 
+}
+
+.categoryNav{
+    display: block;
 }
