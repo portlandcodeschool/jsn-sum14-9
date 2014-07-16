@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Job Application Manager</title>
+  <link rel="stylesheet" href="css/main.css">
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+</head>
+<body>
+  <h1>Jobs Applied For</h1>
+    <ol class="list-group">
+      {{#jobsAppliedFor}}
+        <li class="list-group-item">{{.}}</li>
+      {{/jobsAppliedFor}}
+    </ol>
+  <h1>Jobs Left to Apply To</h1>
+  <h1>Add New Application:</h1>
+  <div class="form-group" id="form-application">
+    <label for="title">Title</label>
+    <input id="title" type="text" name="title">
+    <label for="company">Company</label>
+    <input id="company" type="text" name="company">
+    <label for="applied-to">Sent Application?</label>
+    <input id="applied-to" type="checkbox" name="applied_to">
+    <br>
+    <button id="submit-application" class="form-button">Submit Application</button><span class="warning hidden">Make sure all required fields are filled out properly</span>
+  </div>
+  <script src="js/main.js"></script>
+</body>
+</html>

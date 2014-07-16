@@ -10,7 +10,7 @@ $(function () {
 
     if (newTodo) {
       $.post('/addtodo', newTodo, function (response) {
-        console.log(response);
+        console.log('heeey',response);
       });
     }  
   });
