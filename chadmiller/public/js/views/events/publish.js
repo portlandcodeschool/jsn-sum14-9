@@ -7,9 +7,9 @@ $(function() {
   //socket.emit('addAuthor')
 
   socket.on('updates', function(update) {
-    console.log(update)
+    console.log(update);
     // remove the no updates well if it exists
-    if ($('.well')) $('.well').remove();
+    if ($('#no-updates')) $('#no-updates').remove();
 
     var updateItem = new Update(update.author, update.msg, update.timestamp);
     var $update = $(updateItem.toHTML(true));
