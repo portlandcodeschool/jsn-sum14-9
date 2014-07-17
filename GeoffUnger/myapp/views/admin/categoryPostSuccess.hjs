@@ -7,9 +7,6 @@
 
 </head>
 <body>
-<h1>Post success!</h1>
-<h2>The parameter was: {{request}}</h2>
-<h2>The result was: {{result}}</h2>
 <h2>Current categories:</h2>
 <ul>
 {{#categories}}

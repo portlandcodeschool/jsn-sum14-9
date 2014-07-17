@@ -8,7 +8,6 @@
 
 </head>
 <body>
-<small>The magic word is {{this}}!</small>
 <h1>Add a product:</h1>
 <form method="POST" action="">
     <label for="categoryName">Pick a category:</label>

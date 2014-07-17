@@ -22,6 +22,8 @@ var printout = function(str){
 
 var populateDiv = function(data, status){
     console.log(status);
+    $("#main").empty();
+    $("#main").append(data);
 }
 
 

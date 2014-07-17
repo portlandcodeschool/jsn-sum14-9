@@ -12,6 +12,7 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 var category = require('./routes/admin/category');
 var product = require('./routes/admin/product');
+var products = require('./routes/products');
 
 var app = express();
 
@@ -29,6 +30,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
+app.use('/products', products);
 app.use('/users', users);
 app.use('/admin/product', product);
 app.use('/admin/category', category);
