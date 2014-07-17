@@ -11,6 +11,7 @@ $(function () {
     if (newIngredient) {
       $.post('/addingredient', newIngredient, function (response) {
         console.log(response);
+        setTimeout(function(){location.reload();}, 500);
       });
     }  
   });

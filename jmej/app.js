@@ -1,6 +1,7 @@
 // dependencies
 var express = require('express');
 var path = require('path');
+var http = require('http');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
 var consolidate = require('consolidate');
@@ -31,63 +32,106 @@ app.use(express.static(path.join(__dirname, 'public')));
 var dbFunctions = {};
 
 dbFunctions.addFakeingredient = function () {
-  db.put('my-kitchen', 'ingredients', {ingredient: [{"eggs": "12"}, {"flour": "1 lb"}, {"milk": "1 Quart"}, {"sugar": "1 lb"}, {"baking soda":"1 box"}, {"baking power":"1 can"}]}
+  db.put('ingredients', '1', {"type" : "eggs", "qty":"12"}
   )
   .fail(function (err) {
     console.error(err);
     console.error('could not add the ingredient. sorry :-(');
   });
-}
+};
 
-dbFunctions.addIngredient = function (id, description) {
-  db.put('ingredients', ('ingredient' + id), {
-    "ingredient": description
+dbFunctions.addIngredient = function (id, type, qty) {
+  db.put('ingredients', id, {
+    "type": type, "qty":qty
   })
   .fail(function (err) {
     console.error(err);
     console.error('could not add the ingredient. sorry :-(');
   });
-}
+};
 
  dbFunctions.addFakeingredient();
 
 // express routes
 
-var items = [];
-
 app.get('/ingredients', function (req, res) {
-  items = [];
-  db.list('my-kitchen', {limit:100, startKey:'ingredients'})
+  var items = []; //stores all my ingredient objects as they come back from orchestrate
+  var ings = []; //stores the item.qty + item.type strings for the template output
+  var ingtypes = [];
+  db.list('ingredients', {limit:100, startKey:'1'})
   .then(function (result) {
-    //console.log(result.body.results);
     result.body.results.forEach(function (item, index) {
-      var resultItems = item.value;
-      console.log(resultItems);  
-      resultItems.forEach(function (item, index){
-        var resultItem = item;
-        
-        items.unshift(resultItem);
-      });  
-    });
+      var resultItem = item.value;
+      items.unshift(resultItem);
+    }); 
   })
   .then(function(result) {
-    res.render('ingredients', {items:items});
+    items.forEach(function (item, index){
+    ings.unshift(item.qty+" "+item.type);
+    ingtypes.unshift(item.type);
+    });
+    res.render('ingredients', {items:ings});
+    getRecipes(ingtypes);
+    //console.log(ingtypes);
   })
   .fail(function (err) {
     console.error(err);
-  })
+  });
 });
 
 
-// json from client: {"eggs": "1 dozen}
+// json from client
 app.post('/addingredient', function (req, res){
   req.accepts('application/json');
-  var id = items.length;
-  console.log(req.body);
-  console.log('just added the ingredient: ' + req.body.ingredient);
-  dbFunctions.addIngredient(id, req.body.ingredient)
+  var id = items.length+1;
+  console.log(req.body.ingredient);
+  var ingArr = req.body.ingredient.split(" ");
+  var ing = ingArr.pop();                           //assumes the last word entered is the actual ingredient
+  var qty = ingArr.toString();
+  var re = /,/gi;
+  qty = qty.replace(re," "); //assumes all but the first word are a string describing qty
+  console.log('just added ' +qty+ ' the ingredient: '+ing);
+  dbFunctions.addIngredient(id, ing, qty);
   res.send(200, 'ok, we added your ingredient');
 });
+
+// get list of recipes from food2fork.com
+
+var getRecipes = function(arr){
+  var path = "http://food2fork.com/api/search?key=3ebaeb557c399a02f6d31c1920934738&q=";
+  var ings = "";
+  for (var i =0; i<(arr.length); i++){
+      ings = ings+arr[i]+',';
+    }
+  ings = ings.slice(0, -1);
+  console.log(path+ings);
+  var options = {
+  host: 'food2fork.com',
+  path: path+ings
+};
+  var recipes = {};
+
+callback = function(response) {
+  var str = '';
+
+  //another chunk of data has been recieved, so append it to `str`
+  response.on('data', function (chunk) {
+    str += chunk;
+  });
+
+  //the whole response has been recieved, so we just print it out here
+  response.on('end', function () {
+    recipes = JSON.parse(str);
+    for (var i=0; i<recipes.recipes.length; i++){
+      console.log(recipes.recipes[i].title + " website: "+recipes.recipes[i].source_url+" image "+recipes.recipes[i].image_url)
+    }
+  });
+};
+
+http.request(options, callback).end();
+};
+
+//getRecipes();
 
 // express middleware for error handling
 app.use(function(req, res, next) {

@@ -16,11 +16,18 @@
     <button id="add-ingredient" class="btn btn-success">Add Ingredient</button>
   </div>
   <br><br>
-  <h3>My Ingredients</h3>
+  <h3>This is what you have to work with:</h3>
   <ol class="list-group">
     {{#items}}
       <li class="list-group-item">{{.}}</li>
     {{/items}}
+  </ol>
+
+    <h3>This is what you can make:</h3>
+  <ol class="list-group">
+    {{#recipes}}
+      <li class="list-group-item">{{.}}</li>
+    {{/recipes}}
   </ol>
 
   <script src="js/main.js"></script>
