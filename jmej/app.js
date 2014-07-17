@@ -6,14 +6,16 @@ var logger = require('morgan');
 var bodyParser = require('body-parser');
 var consolidate = require('consolidate');
 var Q = require('q');
-var config = require('./config.js');
-var db = require('orchestrate')(config.dbKey); // you need to use your own api key
-// add a file in this same directory called config.js
-// export an object from the file with the property called dbKey
-// add your own orchestrate app key 
+var config = require('./config.js'); //needs to look like this: module.exports = {dbKey: "YOUR_ORCHESTRATE_KEY", f2fKey: "YOUR_API_KEY"};
+var db = require('orchestrate')(config.dbKey);
+var f2fKey = config.f2fKey; //food2fork API key
 
 // start express
 var app = express();
+
+//setup date for timestamping logs - used in generating db ids
+var date = new Date();
+var now = date.getTime();
 
 // template configuration
 app.engine('html', consolidate.hogan);
@@ -32,7 +34,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 var dbFunctions = {};
 
 dbFunctions.addFakeingredient = function () {
-  db.put('ingredients', '1', {"type" : "eggs", "qty":"12"}
+  db.put('ingredients', '1_eggs', {"type" : "eggs", "qty":"12"}
   )
   .fail(function (err) {
     console.error(err);
@@ -40,8 +42,10 @@ dbFunctions.addFakeingredient = function () {
   });
 };
 
-dbFunctions.addIngredient = function (id, type, qty) {
-  db.put('ingredients', id, {
+dbFunctions.addIngredient = function (type, qty) {
+  var timeStamp = now;
+  var oid = timeStamp+'_'+type;
+  db.put('ingredients', oid, {
     "type": type, "qty":qty
   })
   .fail(function (err) {
@@ -52,13 +56,48 @@ dbFunctions.addIngredient = function (id, type, qty) {
 
  dbFunctions.addFakeingredient();
 
-// express routes
+// express route
 
 app.get('/ingredients', function (req, res) {
   var items = []; //stores all my ingredient objects as they come back from orchestrate
   var ings = []; //stores the item.qty + item.type strings for the template output
   var ingtypes = [];
-  db.list('ingredients', {limit:100, startKey:'1'})
+  var recipes = [];
+
+  var getRecipes = function(arr){
+    var path = "http://food2fork.com/api/search?key="+f2fKey+"&q=";
+    var ingq = "";
+    for (var i =0; i<(arr.length); i++){
+      ingq = ingq+arr[i]+',';
+    }
+    ingq = ingq.slice(0, -1);
+    //console.log(path+ings);
+    var options = {
+    host: 'food2fork.com',
+    path: path+ingq
+  };
+
+  var callback = function(response) {
+    var str = '';
+
+    response.on('data', function (chunk) {
+    str += chunk;
+  });
+
+    response.on('end', function () {
+    var o = [];
+    recipes = JSON.parse(str);
+    for (var i=0; i<recipes.recipes.length; i++){
+      o.unshift({url:recipes.recipes[i].source_url,img:recipes.recipes[i].image_url, title:recipes.recipes[i].title});
+    }
+    res.render('ingredients', {items:ings, recipes:o});
+    //console.log(ings);
+    });
+  };
+
+  http.request(options, callback).end();
+};
+  db.list('ingredients', {limit:100, startKey:'1'})  //call to orchestrate
   .then(function (result) {
     result.body.results.forEach(function (item, index) {
       var resultItem = item.value;
@@ -70,7 +109,6 @@ app.get('/ingredients', function (req, res) {
     ings.unshift(item.qty+" "+item.type);
     ingtypes.unshift(item.type);
     });
-    res.render('ingredients', {items:ings});
     getRecipes(ingtypes);
     //console.log(ingtypes);
   })
@@ -83,7 +121,6 @@ app.get('/ingredients', function (req, res) {
 // json from client
 app.post('/addingredient', function (req, res){
   req.accepts('application/json');
-  var id = items.length+1;
   console.log(req.body.ingredient);
   var ingArr = req.body.ingredient.split(" ");
   var ing = ingArr.pop();                           //assumes the last word entered is the actual ingredient
@@ -91,45 +128,13 @@ app.post('/addingredient', function (req, res){
   var re = /,/gi;
   qty = qty.replace(re," "); //assumes all but the first word are a string describing qty
   console.log('just added ' +qty+ ' the ingredient: '+ing);
-  dbFunctions.addIngredient(id, ing, qty);
+  dbFunctions.addIngredient(ing, qty);
   res.send(200, 'ok, we added your ingredient');
 });
 
 // get list of recipes from food2fork.com
 
-var getRecipes = function(arr){
-  var path = "http://food2fork.com/api/search?key=3ebaeb557c399a02f6d31c1920934738&q=";
-  var ings = "";
-  for (var i =0; i<(arr.length); i++){
-      ings = ings+arr[i]+',';
-    }
-  ings = ings.slice(0, -1);
-  console.log(path+ings);
-  var options = {
-  host: 'food2fork.com',
-  path: path+ings
-};
-  var recipes = {};
 
-callback = function(response) {
-  var str = '';
-
-  //another chunk of data has been recieved, so append it to `str`
-  response.on('data', function (chunk) {
-    str += chunk;
-  });
-
-  //the whole response has been recieved, so we just print it out here
-  response.on('end', function () {
-    recipes = JSON.parse(str);
-    for (var i=0; i<recipes.recipes.length; i++){
-      console.log(recipes.recipes[i].title + " website: "+recipes.recipes[i].source_url+" image "+recipes.recipes[i].image_url)
-    }
-  });
-};
-
-http.request(options, callback).end();
-};
 
 //getRecipes();
 
