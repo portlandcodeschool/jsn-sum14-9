@@ -31,7 +31,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/products', products);
-app.use('/users', users);
 app.use('/admin/product', product);
 app.use('/admin/category', category);
 
