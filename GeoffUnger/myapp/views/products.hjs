@@ -1,0 +1,9 @@
+
+<ul>
+    {{#products}}
+
+        <li>{{value.product}}</li>
+
+    {{/products}}
+
+</ul>

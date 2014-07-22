@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ title }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="stylesheets/bootstrap.min.css" rel="stylesheet" media="screen">
+
+</head>
+<body>
+<div class="container-fluid">
+    <div class="page-header">
+        <h1>Geoff's Product Rating Site <small>Pick a category</small></h1>
+    </div>
+    <div class="row" id="categoryNav">
+        <div class="col-sm-3">
+            <ul class="list-group">
+                {{#categories}}
+                    <li class="list-group-item">{{value.category}}</li>
+                {{/categories}}
+            </ul>
+        </div>
+        <div class="col-sm-9" id="main">
+
+        </div>
+    </div>
+</div>
+
+<script src="javascripts/jquery-1.11.1.min.js"></script>
+<script src="javascripts/index.js"></script>
+</body>
+</html>
+
+
+
+
