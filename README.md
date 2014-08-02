@@ -1,31 +1,22 @@
-# Homework 9: jQuery, Express.js, Orchestrate
+jsn-sum14-7
+===========
 
-### Assignment: 
-Using your new-found knowledge, with example apps from the past two weeks as "skeletons", build a new app. Pick content for your app that is reasonably relevant or interesting to you. Instead of a todo app, perhaps you have an app that keeps track of your favorite beverages (many people do wine or beer, but non-alcoholic is cool too). You can bring back the recipe manager if you feel like it. Perhaps a bug taxonomy app with pictures of bugs and fun and interesting facts? These are arbitrary examples. The point is to pick one that is fun for you to work with. 
-### Requirements: 
-- Seek help when you get stuck. 
-- Seek help from your peers, teachers, and TAs regarding ideas for apps. This challenge of coming up with an idea will be good preparation for your group projects. 
-- **Use jQuery** at least once to change something on the page. Try to use event listeners. Use any part of jQuery that is interesting or fun to you. 
-- Use at least one **orchestrate.io** request, such as: 
-```js
-  db.put('my-todos', 'todo1', {
-    "todo": "mow the lawn"
-  })
-  .fail(function (err) {
-    console.error(err);
-    console.error('could not add the todo. sorry :-(');
-  });
-```
-- Use at least a bare-bones **express.js server** to serve your content (html, css, client-side javascript) and to manage how data gets from the database to the server to the client and the reverse. 
+### Homework 7
 
-### Purpose: 
-We now have a much larger set of tools to build applications with. We are using javascript on both the client and the server. This can be overwhelming. There are lots of details. You have all also reached the point where creating things with code is much more valuable to your learning than simply reading a book about code. 
+1. Make a new app using the to-do app from class as an example. In other words, create an app of similar complexity but different content. It should have the ability to handle a "GET", "POST", and "DELETE".
+2. Try to add at least one feature that does not correspond to any features in the todo app. 
+3. Feel free to indulge a little bit in presentation of the ui. This will come in handy as you make a portfolio site and work on your eventual capstone project.
+4. Make comments on teammates' pull requests to suggest a feature or to help make the code better. 
+5. When you have addressed (not necessarily agreed with) all of the pull requests provided by teammates, you may merge your pull request. Use the git workflow from git slideshow #2. Please do not forget to put your work in a named branch (with your name on it) and in a folder/ directory( you may title the folder whatever you like, so long as it is unique).
 
-Another aspect of this assignment is application design. This design is determined by the content but it is also affected by which tools we use. In our case, we have to figure out how to make an app while using jQuery, Orchestrate, and Express.js. Learning this design process, with all of its built-in constraints and challenges, will help you learn how to wield javascript in interesting and helpful ways. 
+Goals: 
+- To move beyond tinkering with an in-class problem (the to-do app) and to use it as a blueprint for a similar app.
+- To see how modeling a new app after another one immediately leads to changes in the way the app is set up. Usually, this means more complexity and it definitely means plenty of refactoring.
 
-### Recomendations: 
-1. **Break things**. You have to write bad code before you can write good code. 
-2. Spend your time in code and then look for educational materials or check documentation. 
-3. If one of the three ingredients of this assignment (jQuery, express, orchestrate) is difficult for you, do it last. **Start with what you are most comfortable with**, even if that is drawing a picture of the user interface or drawing some diagrams. Practice "pre-coding". This can include pseudo code, or really anything you want.
-4. Start with the simplest version of your app possible and get that to work. Then add more interesting features. This will boost your confidence and help you to solve problems and add features more easily. 
-
+Suggestions:
+- Use a browser "REST" client or curl to interact with your app, particularly for POST and DELETE.
+- Use JShint to help clean up your code and to help you figure out what might be wrong with it.
+- Try to use the interpolator function used in class, but if you can't, just concatenate html strings and javascript values manually. 
+- Pre-code. Draw diagrams, pictures. Do napkin scribbles. Write pseudo code. Don't get stuck staring at the blank screen. Write something, even if is not code. 
+- When it is time to write code, don't be afraid to write bad code. It is universally true that one must write bad code before good code (otherwise you would never get anything done).
+- Talk with your teammates and classmates about feature ideas. Don't feel like you have to brainstorm alone. 

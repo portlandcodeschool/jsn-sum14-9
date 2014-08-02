@@ -1,38 +1,37 @@
 <!doctype html>
 <html lang="en">
 <head>
+
   <meta charset="UTF-8">
-  <title>Simple Backbone Example</title>
+  <title>MTG Wish list</title>
   <link rel="stylesheet" href="css/bootstrap.css">
 
   <script type="text/javascript" src="js/lib/jquery.js"></script>
+  <script type="text/javascript" src="js/lib/M14.json"></script>
   <script type="text/javascript" src="js/lib/underscore.js"></script>
   <script type="text/javascript" src="js/lib/backbone.js"></script>
   <script type="text/javascript" src="js/lib/hbs.js"></script>
-  <script type="text/javascript" src="js/lib/bootstrap.js"></script>
+  <script type="text/javascript" src="js/main.js"></script>
 
 </head>
-<body>
-<h1>Organizer App</h1>
+<body style='background-color:#C0C0C0'>
+  <h1>Add a Card</h1>
+  <div class="form-group">
+  <form id = "form">
+    <label for="card-input">Card Title</label>
+    <input name ="cardName" id="card-input" class="form-control" type="text">
+  </form>
+    <button id="btn-add" class="btn btn-success">Add card</button>
+  </div>
+  <br><hr>
+<h1>Wish List</h1>
+<div class="" style="padding-left:20px" >
+<table class="table" style ="table-layout: fixed; width: 500px;" >
+<tbody>
 
-<body class="container-fluid">
-  <ul class="nav nav-pills">
-    <li><a href="#">Todos</a></li>
-    <li><a href="#/contacts">Contacts</a></li>
-  </ul>
-  <section id="my-app" class="container-fluid col-xs-6">
+</tbody>
+</table>
+</div>
 
-  </section>
-
-  <script type="text/javascript" src="js/views/todo-input-view.js"></script>
-  <script type="text/javascript" src="js/views/todo-list-view.js"></script>
-  <script type="text/javascript" src="js/views/todo-main-view.js"></script>
-
-  <script type="text/javascript" src="js/views/contacts-input-view.js"></script>
-  <script type="text/javascript" src="js/views/contacts-list-view.js"></script>
-  <script type="text/javascript" src="js/views/contacts-main-view.js"></script>
-
-
-  <script type="text/javascript" src="js/main.js"></script>
 </body>
 </html>

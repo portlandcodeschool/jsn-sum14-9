@@ -5,6 +5,7 @@ var logger = require('morgan');
 var bodyParser = require('body-parser');
 var config = require('./config.js');
 var consolidate = require('consolidate');
+var Handlebars = require('handlebars');
 
 var db = require('orchestrate')(config.dbKey);
 
@@ -14,67 +15,37 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.engine('html', consolidate.hogan);
+app.engine('html', consolidate.handlebars);
 app.set('view engine', 'html');
 app.set('views', __dirname + '/templates');
 
-// express routes
-
+// express route
 app.get('/', function (req, res) {
   res.render('./index.html');
 });
 
-//db.deleteCollection('bb-todos');
+//db.deleteCollection('MTG cards');
 
-app.get('/api/todos', function (req, res) {
-  var todos = [];
-  db.list('bb-todos')
+app.get('/api/list', function (req, res) {
+  var list = [];
+  db.list('MTG cards')
   .then(function (result) {
-    result.body.results.forEach(function (item){
-      todos.push(item.value);
+  result.body.results.forEach(function (item){
+     list.push(item.value);
     });
-    res.json(todos);
-    console.log(todos);
+    res.json(list);
   })
   .fail(function (err) {
     console.error(err);
   });
 });
 
-app.post('/api/todos', function (req, res){
+app.post('/api/list', function (req, res){
+  var d = new Date();
   req.accepts('application/json');
-  console.log(req.body);
-  db.put('bb-todos', ('todo' + req.body.creationDate), req.body)
+  db.put('MTG cards', ('card' +d.getTime()), req.body)
   .then(function (){
-    console.log(req.body);
-    res.send(200, 'ok, we added your todo, here is what you added');
-  })
-  .fail(function (err) {
-    console.error(err);
-  });
-});
-
-app.get('/api/contacts', function (req, res) {
-  var contacts = [];
-  db.list('bb-contacts')
-  .then(function (result) {
-    result.body.results.forEach(function (item){
-      contacts.push(item.value);
-    });
-    console.log(contacts);
-    res.json(contacts);
-  })
-  .fail(function (err) {
-    console.error(err);
-  });
-});
-
-app.post('/api/contacts', function (req, res){
-  req.accepts('application/json');
-  console.log(req.body);
-  db.put('bb-contacts', ('contact' + req.body.creationDate), req.body)
-  .then(function (result){
-    res.send(200, 'ok, we added your contact');
+    res.send(200, 'ok, we added your card, here is what you added');
   })
   .fail(function (err) {
     console.error(err);

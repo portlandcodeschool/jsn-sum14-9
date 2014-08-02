@@ -1,16 +1,13 @@
-var todoMainTemplate = '<h2>Add a Todo</h2>' +
+var todoMainTemplate = '<h2>Add Card</h2>' +
   '<div class="form-group">' +
-    '<label for="todo-input">Todo Title</label>' +
+    '<label for="todo-input">Card Title</label>' +
     '<input id="todo-input" class="form-control" type="text">' +
     '<br>' +
-    '<label for="description-input">Todo Description</label>' +
-    '<input id="description-input" class="form-control" type="text">' +
-    '<br>' +
-    '<button id="add-todo" class="btn btn-success">Add todo</button>' +
+    '<button id="add-todo" class="btn btn-success">Add Card</button>' +
     '<br>' +
   '</div>' +
   '<br><br>' +
-  '<h3>My Todos</h3>' +
+  '<h3>My WishList</h3>' +
   '<div id="todo-list">' +
   '</div>';
 
